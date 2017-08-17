@@ -317,10 +317,12 @@ class TradingApi(BaseTradingApi):
     def returnLendingHistory(self,
                              start=datetime.now() - timedelta(days=1),
                              end=datetime.now(),
-                             limit=0):
+                             limit=500):
         """
         Returns your lending history within a time range specified by the "start" and "end" POST parameters as UNIX timestamps.
-        TODO: "limit" may also be specified to limit the number of rows returned.
+        "limit" may also be specified to limit the number of rows returned.
+
+        Polo is defaulting to limit 500 right now 2017-08-17
         """
         pass
 
