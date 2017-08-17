@@ -177,6 +177,23 @@ class TradingApi(BaseTradingApi):
         pass
 
     @command_operator
+    def cancelOrder(self, order_number):
+        """
+        Cancels an order you have placed in a given market. Required POST parameter is "orderNumber"
+        """
+        pass
+
+    @command_operator
+    def moveOrder(self, order_number, rate, amount):
+        """
+        Cancels an order and places a new one of the same type in a single atomic transaction, meaning either both
+        operations will succeed or both will fail. Required POST parameters are "orderNumber" and "rate"; you may
+        optionally specify "amount" if you wish to change the amount of the new order.
+        TODO: "postOnly" or "immediateOrCancel" may be specified for exchange orders, but will have no effect on margin orders.
+        """
+        pass
+
+    @command_operator
     def withdraw(self, currency, amount, address):
         """
         Immediately places a withdrawal for a given currency, with no email confirmation. In order to use this method,
@@ -186,8 +203,130 @@ class TradingApi(BaseTradingApi):
         pass
 
     @command_operator
-    def cancelOrder(self, order_number):
+    def returnFeeInfo(self):
         """
-        Cancels an order you have placed in a given market. Required POST parameter is "orderNumber" 
+        If you are enrolled in the maker-taker fee schedule, returns your current trading fees and trailing 30-day volume in BTC.
+        This information is updated once every 24 hours.
+        """
+        pass
+
+    @command_operator
+    def returnAvailableAccountBalances(self):
+        """
+        Returns your balances sorted by account.
+        TODO: You may optionally specify the "account" POST parameter if you wish to fetch only the balances of one account.
+        Please note that balances in your margin account may not be accessible if you have any open margin positions or orders.
+        """
+        pass
+
+    @command_operator
+    def returnTradableBalances(self):
+        """
+        Returns your current tradable balances for each currency in each market for which margin trading is enabled.
+        Please note that these balances may vary continually with market conditions.
+        """
+        pass
+
+    @command_operator
+    def returnMarginAccountSummary(self):
+        """
+        Returns a summary of your entire margin account. This is the same information you will find in the
+        Margin Account section of the Margin Trading page, under the Markets list.
+        """
+        pass
+
+    @command_operator
+    def marginBuy(self,
+                  currency_pair,
+                  rate,
+                  amount,
+                  lending_rate=1):
+        """
+        Places a margin buy order in a given market.
+        Required POST parameters are "currencyPair", "rate", and "amount".
+        You may optionally specify a maximum lending rate using the "lendingRate" parameter.
+        If successful, the method will return the order number and any trades immediately resulting from your order.
+        """
+        pass
+
+    @command_operator
+    def marginSell(self,
+                  currency_pair,
+                  rate,
+                  amount,
+                  lending_rate=1):
+        """
+        Places a margin sell order in a given market.
+        Parameters and output are the same as for the marginBuy method.
+        """
+        pass
+
+    @command_operator
+    def getMarginPosition(self, currency_pair):
+        """
+        Returns information about your margin position in a given market, specified by the "currencyPair" POST parameter.
+        You may set "currencyPair" to "all" if you wish to fetch all of your margin positions at once.
+        If you have no margin position in the specified market, "type" will be set to "none". "liquidationPrice"
+        is an estimate, and does not necessarily represent the price at which an actual forced liquidation will occur. If you have no liquidation price, the value will be -1.
+        """
+        pass
+
+    @command_operator
+    def closeMarginPosition(self, currency_pair):
+        """
+        Closes your margin position in a given market (specified by the "currencyPair" POST parameter) using a market order.
+        This call will also return success if you do not have an open position in the specified market.
+        """
+        pass
+
+    @command_operator
+    def createLoanOffer(self,
+                        currency,
+                        amount,
+                        duration,
+                        auto_renew,
+                        lending_rate):
+        """
+        Creates a loan offer for a given currency.
+        Required POST parameters are "currency", "amount", "duration", "autoRenew" (0 or 1), and "lendingRate".
+        """
+        pass
+
+    @command_operator
+    def cancelLoanOffer(self, order_number):
+        """
+        Cancels a loan offer specified by the "orderNumber" POST parameter.
+        """
+        pass
+
+    @command_operator
+    def returnOpenLoanOffers(self):
+        """
+        Returns your open loan offers for each currency
+        """
+        pass
+
+    @command_operator
+    def returnActiveLoans(self):
+        """
+        Returns your active loans for each currency
+        """
+        pass
+
+    @command_operator
+    def returnLendingHistory(self,
+                             start=datetime.now() - timedelta(days=1),
+                             end=datetime.now()):
+        """
+        Returns your lending history within a time range specified by the "start" and "end" POST parameters as UNIX timestamps.
+        TODO: "limit" may also be specified to limit the number of rows returned.
+        """
+        pass
+
+    @command_operator
+    def toggleAutoRenew(self, order_number):
+        """
+        Toggles the autoRenew setting on an active loan, specified by the "orderNumber" POST parameter.
+        If successful, "message" will indicate the new autoRenew setting.
         """
         pass

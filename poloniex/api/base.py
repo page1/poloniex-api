@@ -165,8 +165,11 @@ class BaseTradingApi:
 
     def get_params(self, command, **kwargs):
         currency_pair = kwargs.get("currency_pair")
+        lending_rate = kwargs.get("lending_rate")
 
         currency = kwargs.get("currency")
+        duration = kwargs.get("duration")
+        auto_renew = kwargs.get("auto_renew")
 
         start = kwargs.get("start")
         if start:
@@ -260,19 +263,147 @@ class BaseTradingApi:
                 }
                 break
 
+            if case("cancelOrder"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "orderNumber": order_number
+                }
+                break
+
+            if case("moveOrder"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "currencyPair": currency_pair,
+                    "rate": rate,
+                    "amount": amount
+                }
+                break
+
             if case("withdraw"):
                 method = "post"
                 params = {
+                    "command": command,
                     "currency": currency,
                     "amount": amount,
                     "address": address
                 }
                 break
 
-            if case("cancelOrder"):
+            if case("returnFeeInfo"):
                 method = "post"
                 params = {
-                    "command": "cancelOrder",
+                    "command": command
+                }
+                break
+
+            if case("returnAvailableAccountBalances"):
+                method = "post"
+                params = {
+                    "command": command
+                }
+                break
+
+            if case("returnTradableBalances"):
+                method = "post"
+                params = {
+                    "command": command
+                }
+                break
+
+            if case("returnMarginAccountSummary"):
+                method = "post"
+                params = {
+                    "command": command
+                }
+                break
+
+            if case("marginBuy"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "currencyPair": currency_pair,
+                    "rate": rate,
+                    "amount": amount,
+                    "lendingRate": lending_rate
+                }
+                break
+
+            if case("marginSell"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "currencyPair": currency_pair,
+                    "rate": rate,
+                    "amount": amount,
+                    "lendingRate": lending_rate
+                }
+                break
+
+            if case("getMarginPosition"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "currencyPair": currency_pair
+                }
+                break
+
+            if case("closeMarginPosition"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "currencyPair": currency_pair
+                }
+                break
+
+            if case("createLoanOffer"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "currency": currency,
+                        "amount": amount,
+                        "duration": duration,
+                        "autoRenew": auto_renew,
+                        "lendingRate": lending_rate
+                }
+                break
+
+            if case("cancelLoanOffer"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "orderNumber": order_number
+                }
+                break
+
+            if case("returnOpenLoanOffers"):
+                method = "post"
+                params = {
+                    "command": command
+                }
+                break
+
+            if case("returnActiveLoans"):
+                method = "post"
+                params = {
+                    "command": command
+                }
+                break
+
+            if case("returnLendingHistory"):
+                method = "post"
+                params = {
+                    "command": command,
+                    "start": start,
+                    "end": end
+                }
+                break
+
+            if case("toggleAutoRenew"):
+                method = "post"
+                params = {
+                    "command": command,
                     "orderNumber": order_number
                 }
                 break
