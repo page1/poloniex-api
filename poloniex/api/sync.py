@@ -316,7 +316,8 @@ class TradingApi(BaseTradingApi):
     @command_operator
     def returnLendingHistory(self,
                              start=datetime.now() - timedelta(days=1),
-                             end=datetime.now()):
+                             end=datetime.now(),
+                             limit=0):
         """
         Returns your lending history within a time range specified by the "start" and "end" POST parameters as UNIX timestamps.
         TODO: "limit" may also be specified to limit the number of rows returned.

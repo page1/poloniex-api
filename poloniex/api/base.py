@@ -170,6 +170,7 @@ class BaseTradingApi:
         currency = kwargs.get("currency")
         duration = kwargs.get("duration")
         auto_renew = kwargs.get("auto_renew")
+        limit = kwargs.get("limit")
 
         start = kwargs.get("start")
         if start:
@@ -396,7 +397,8 @@ class BaseTradingApi:
                 params = {
                     "command": command,
                     "start": start,
-                    "end": end
+                    "end": end,
+                    "limit": limit
                 }
                 break
 
